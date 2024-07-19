@@ -1,0 +1,180 @@
+<HTML>
+<head>
+<TITLE>Raymond Chan</TITLE>
+<link rel="shortcut icon" href="https://www.math.cuhk.edu.hk/~rchan/icons/toeplitz.ico" type="image/ico"   />
+</head>
+<body vlink="red" link="blue" background="gifs/bg_snow.jpg"> 
+
+<SCRIPT language=JavaScript1.2>
+/* 
+Snowfall script from yahoo.fr. Skiing added by 
+<a href="http://www.math.cuhk.edu.hk/~rchan">Raymond H. Chan</a>. 
+snowman.gif image from: http://cnets.net/~eclectic/animated.htm.
+*/
+<!--
+function rnd(){return Math.random();}
+function xRnd(){return (rnd()/10);}
+function yRnd(){return (2 + 2*( .5 - rnd() ));}
+var NS4 = (document.layers) ? true : false;
+var letitsnow = true;
+var flakes = Array("gifs/snwflk.gif","gifs/snwflk2.gif","gifs/snwflk3.gif","gifs/snwflk4.gif");
+var snowman = Array("gifs/snowman0.gif","gifs/snowman1.gif","gifs/snowman2.gif","gifs/snowman3.gif","gifs/snowman4.gif","gifs/snowman5.gif");
+var snowmen = Array("gifs/snowmen0.gif","gifs/snowmen1.gif","gifs/snowmen2.gif","gifs/snowmen3.gif","gifs/snowmen4.gif","gifs/snowmen5.gif");
+var thisflake, ctr, dx, xPos, yPos, am, vx, vy, obj, i;
+var numitem = 6;
+var numflakes = 7;
+var imax = numitem+numflakes;
+var T = 50;
+var flakeswaymax = 20;
+var flew = false;
+var winwidth = 640;
+var winheight = 480;
+var msgin="Let it snow, let it snow, let it snow ...";
+var msgempty="                                                      ";
+var msgout=msgin+msgempty;
+var msglng=msgout.length;
+function sizeIt()
+{
+window.winwidth = window.innerWidth?window.innerWidth:document.body.clientWidth;
+window.winheight = window.innerHeight?window.innerHeight:document.body.clientHeight;
+}
+dx = new Array();
+xPos = new Array();
+yPos = new Array();
+sway = new Array();
+vx = new Array();
+vy = new Array();
+sizeIt();
+
+document.write("<STYLE type=\"text/css\">\n.flk {position:absolute;top:-100;}</STYLE>");
+for (i = 0; i < imax; i++)
+{
+	if (i<numitem) {thisflake=snowmen[i];}
+        else 
+        {   thisflake = flakes[Math.floor(rnd()*flakes.length)];
+	    xPos[i] = rnd()*(window.winwidth-30) +10;
+	    yPos[i] = rnd()*window.winheight;
+            sway[i] = rnd()*flakeswaymax;
+	    dx[i] = 0;
+	    vx[i] = xRnd();
+	    vy[i] = yRnd();
+        }
+	document.write("<div id=\"f"+ i +"\" class=\"flk\"><img src=\"");
+	document.write(thisflake + "\" border=\"0\"></div>");
+}
+function snowMove(id,left,top)
+{
+	obj = document.getElementById?document.getElementById(id).style:
+	document.all?document.all[id].style:
+	document.layers?document.layers[id]:null;
+	if (obj)
+	{
+		obj.left=left;
+		obj.top=top;
+	}
+}
+function doSnow() 
+{
+     if (letitsnow)
+     {  sizeIt();
+	deltax = (window.pageXOffset!=null)?window.pageXOffset:document.body.scrollLeft;
+	deltay = (window.pageYOffset!=null)?window.pageYOffset:document.body.scrollTop;
+	for (i = numitem; i < imax; ++ i) 
+             {  yPos[i] += vy[i];
+		if (yPos[i] > window.winheight+deltay-20) 
+                   {	xPos[i] = rnd()*(window.winwidth-sway[i]-30);
+			yPos[i] = deltay;
+			vx[i] = xRnd();
+			vy[i] = yRnd();
+		    }
+		dx[i] += vx[i];
+		snowMove("f"+i,xPos[i]+sway[i]*Math.cos(dx[i]),yPos[i]);
+	      }
+         if (flew==true)
+             {  yPos[ctr] += vy[ctr];
+		xPos[ctr] += vx[ctr];
+                msgout=msgout.substring(1,msglng)+msgout.substring(0,1);
+                window.status=msgout;
+		if (xPos[ctr] > window.winwidth+deltax-30 || yPos[ctr] > window.winheight+deltay-20) 
+                   {	xPos[ctr]=-70;
+                        yPos[ctr]=-70;
+                        window.status=msgempty;
+                        flew=false;
+	           }
+		snowMove("f"+ctr,xPos[ctr],yPos[ctr]);
+	      }
+	setTimeout("doSnow()", T);
+      }
+}
+function flyaway(item)
+{
+    var counter=parseInt(item.name.substring(item.name.length-1,item.name.length));
+    item.src=snowman[counter];
+    if(flew==false)
+    {     flew=true;
+          if (NS4) {xPos[counter]=item.x;yPos[counter]=item.y;}
+          else {xPos[counter]=item.offsetLeft;yPos[counter]=item.offsetTop;}
+          vx[counter] = 5+xRnd()*10;
+          vy[counter] = yRnd()/2;
+          ctr=counter;
+    }
+}
+window.onload=doSnow;
+//--></SCRIPT>
+
+
+<center>
+<IMG SRC = "gifs/Raymond_Chan.jpg" ALIGN=left alt="">
+</center>
+
+<table>
+<tr>
+<td>
+<font size="5", color="blue"> Raymond Honfu Chan 
+(<IMG SRC = "gifs/chan.gif" ALIGN=absmiddle>)</font>
+</td>
+<tr>
+<td>Emeritus Professor  </td>
+<tr>
+<td>Department of Mathematics </td>
+<tr>
+<td>The Chinese University of Hong Kong </td>
+</table>
+<p>
+
+<center>
+<hr color="#FFFAFA" >
+</center>
+<p>
+
+
+<table>
+<tr>
+<td><font size="5", color="blue"><a href="http://personal.cityu.edu.hk/~rhfchan/">Current personal website</a> </font> </td>
+<tr><td></td>
+<tr><td></td>
+<tr>
+<td> 
+<a href="https://www.cityu.edu.hk/csci/about-us/deans-message">Dean</a>, 
+<a href="https://www.cityu.edu.hk/csci/">College of Science</a>  </td>
+<tr>
+<td>
+<a href="http://www6.cityu.edu.hk/ma/people/profile/RChan.htm">Chair Professor</a>, 
+<a href="http://www6.cityu.edu.hk/ma/">Department of Mathematics</a></td>
+<tr>
+<td>Rm B6518, College of Science </td>
+<tr>
+<td><a href="https://www.cityu.edu.hk/">City University of Hong Kong</a> </td>
+<tr>
+<td>Telephone: +852 3442-2980</td>
+<tr>
+<td>Fax: +852 2442-0295</td>
+<tr>
+<td>Email: rchan.sci@cityu.edu.hk</td>
+</table>
+<p>
+
+
+</body>
+</HTML>
+

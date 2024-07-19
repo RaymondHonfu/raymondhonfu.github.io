@@ -1,0 +1,434 @@
+<HTML>
+<head>
+<TITLE>Raymond Chan</TITLE>
+<link rel="shortcut icon" href="https://www.math.cuhk.edu.hk/~rchan/icons/toeplitz.ico" type="image/ico"   />
+</head>
+<body vlink="red" link="blue" background="gifs/bg_snow.jpg"> 
+
+<SCRIPT language=JavaScript1.2>
+/* 
+Snowfall script from yahoo.fr. Skiing added by 
+<a href="http://www.math.cuhk.edu.hk/~rchan">Raymond H. Chan</a>. 
+snowman.gif image from: http://cnets.net/~eclectic/animated.htm.
+*/
+<!--
+function rnd(){return Math.random();}
+function xRnd(){return (rnd()/10);}
+function yRnd(){return (2 + 2*( .5 - rnd() ));}
+var NS4 = (document.layers) ? true : false;
+var letitsnow = true;
+var flakes = Array("gifs/snwflk.gif","gifs/snwflk2.gif","gifs/snwflk3.gif","gifs/snwflk4.gif");
+var snowman = Array("gifs/snowman0.gif","gifs/snowman1.gif","gifs/snowman2.gif","gifs/snowman3.gif","gifs/snowman4.gif","gifs/snowman5.gif");
+var snowmen = Array("gifs/snowmen0.gif","gifs/snowmen1.gif","gifs/snowmen2.gif","gifs/snowmen3.gif","gifs/snowmen4.gif","gifs/snowmen5.gif");
+var thisflake, ctr, dx, xPos, yPos, am, vx, vy, obj, i;
+var numitem = 6;
+var numflakes = 7;
+var imax = numitem+numflakes;
+var T = 50;
+var flakeswaymax = 20;
+var flew = false;
+var winwidth = 640;
+var winheight = 480;
+var msgin="Let it snow, let it snow, let it snow ...";
+var msgempty="                                                      ";
+var msgout=msgin+msgempty;
+var msglng=msgout.length;
+function sizeIt()
+{
+window.winwidth = window.innerWidth?window.innerWidth:document.body.clientWidth;
+window.winheight = window.innerHeight?window.innerHeight:document.body.clientHeight;
+}
+dx = new Array();
+xPos = new Array();
+yPos = new Array();
+sway = new Array();
+vx = new Array();
+vy = new Array();
+sizeIt();
+
+document.write("<STYLE type=\"text/css\">\n.flk {position:absolute;top:-100;}</STYLE>");
+for (i = 0; i < imax; i++)
+{
+	if (i<numitem) {thisflake=snowmen[i];}
+        else 
+        {   thisflake = flakes[Math.floor(rnd()*flakes.length)];
+	    xPos[i] = rnd()*(window.winwidth-30) +10;
+	    yPos[i] = rnd()*window.winheight;
+            sway[i] = rnd()*flakeswaymax;
+	    dx[i] = 0;
+	    vx[i] = xRnd();
+	    vy[i] = yRnd();
+        }
+	document.write("<div id=\"f"+ i +"\" class=\"flk\"><img src=\"");
+	document.write(thisflake + "\" border=\"0\"></div>");
+}
+function snowMove(id,left,top)
+{
+	obj = document.getElementById?document.getElementById(id).style:
+	document.all?document.all[id].style:
+	document.layers?document.layers[id]:null;
+	if (obj)
+	{
+		obj.left=left;
+		obj.top=top;
+	}
+}
+function doSnow() 
+{
+     if (letitsnow)
+     {  sizeIt();
+	deltax = (window.pageXOffset!=null)?window.pageXOffset:document.body.scrollLeft;
+	deltay = (window.pageYOffset!=null)?window.pageYOffset:document.body.scrollTop;
+	for (i = numitem; i < imax; ++ i) 
+             {  yPos[i] += vy[i];
+		if (yPos[i] > window.winheight+deltay-20) 
+                   {	xPos[i] = rnd()*(window.winwidth-sway[i]-30);
+			yPos[i] = deltay;
+			vx[i] = xRnd();
+			vy[i] = yRnd();
+		    }
+		dx[i] += vx[i];
+		snowMove("f"+i,xPos[i]+sway[i]*Math.cos(dx[i]),yPos[i]);
+	      }
+         if (flew==true)
+             {  yPos[ctr] += vy[ctr];
+		xPos[ctr] += vx[ctr];
+                msgout=msgout.substring(1,msglng)+msgout.substring(0,1);
+                window.status=msgout;
+		if (xPos[ctr] > window.winwidth+deltax-30 || yPos[ctr] > window.winheight+deltay-20) 
+                   {	xPos[ctr]=-70;
+                        yPos[ctr]=-70;
+                        window.status=msgempty;
+                        flew=false;
+	           }
+		snowMove("f"+ctr,xPos[ctr],yPos[ctr]);
+	      }
+	setTimeout("doSnow()", T);
+      }
+}
+function flyaway(item)
+{
+    var counter=parseInt(item.name.substring(item.name.length-1,item.name.length));
+    item.src=snowman[counter];
+    if(flew==false)
+    {     flew=true;
+          if (NS4) {xPos[counter]=item.x;yPos[counter]=item.y;}
+          else {xPos[counter]=item.offsetLeft;yPos[counter]=item.offsetTop;}
+          vx[counter] = 5+xRnd()*10;
+          vy[counter] = yRnd()/2;
+          ctr=counter;
+    }
+}
+window.onload=doSnow;
+//--></SCRIPT>
+
+
+<center>
+<IMG SRC = "gifs/Raymond_Chan.jpg" ALIGN=left alt="">
+</center>
+
+<table>
+<tr>
+<td>
+<font size="5", color="blue"> Raymond Honfu Chan 
+(<IMG SRC = "gifs/chan.gif" ALIGN=absmiddle>)</font>
+</td>
+<tr>
+<td>Chair Professor, <a href="https://www.cityu.edu.hk/ma/">Department of Mathematics</a>  </td>
+<tr>
+<td><a href="https://www.cityu.edu.hk/vpsa/biography.html">Vice-President (Student Affairs)</a> 
+<tr>
+<td><a href="https://www.cityu.edu.hk/">City University of Hong Kong</a> </td>
+<TR>
+<TD>SIAM Fellow (Class 2013)</td>
+<tr>
+<TD>AMS Fellow (Class 2021)</td>
+<TR>
+<TD>SIAM Council Member (2015-20)</td>
+</table>
+<p>
+
+<center>
+<hr color="#FFFAFA" >
+</center>
+<p>
+
+
+Raymond Chan graduated
+with First Class Honors from the 
+<A HREF="https://www.math.cuhk.edu.hk/en">Department
+of Mathematics</A> at <A HREF="https://www.cuhk.edu.hk/en">The Chinese
+University of Hong Kong</A> in 1980. Uncertain of what to do next, 
+he stayed in the Department as a full-time instructor after graduation. 
+He started his graduate study in 1981
+with a full fellowship from the <A HREF="http://www.cims.nyu.edu">Courant
+Institute of Mathematical Sciences</A> at
+<A href="http://www.nyu.edu">New York University</a>.
+He obtained the M.Sc. and
+<A href="https://www.usnews.com/best-graduate-schools/top-science-schools/applied-mathematics-rankings"
+TITLE="No. 1 Applied Mathematics Graduate Program in US">Ph.D. degrees
+in Applied Mathematics</a> there in 1984 and 1985 respectively
+under the supervision of
+<A Href="http://www.cs.nyu.edu/cs/faculty/widlund/index.html">Professor
+Olof Widlund</a>.<p>
+
+Chan began his career as a tenure-track Assistant Professor
+at the <A HREF="http://www.umass.edu">University of Massachusetts at
+Amherst</A> in 1985. With heart and mind always in Hong Kong, he came back
+to Hong Kong in 1986, first at <A HREF="http://www.hku.hk">The University of
+Hong Kong</A>
+(1986-92) and then at <A HREF="http://www.ust.hk">The Hong Kong University of
+Science and Technology</A> (1993) before joining his Alma Mater in 1993.
+He was the Associate Director of the Institute of Mathematical Sciences 
+(1996-98), the Associate Dean of Science (2004-2009) and the 
+Head of the Mathematics Department (2012-2018). 
+He has retired from the university in 2019 as an Emeritus Professor to become the 
+founding Dean of the <a href="https://www.cityu.edu.hk/csci/">College 
+of Science</a> at <a href="https://www.cityu.edu.hk/">City University 
+of Hong Kong</a>. He is now the <a href="https://www.cityu.edu.hk/vpsa/biography.html">Vice-President (Student Affairs)</a> there since 2021. 
+<p>
+
+Chan has published <A HREF="misc/vitae.html#publist">150 journal
+papers</a> and authored <a href="misc/vitae.html#books">3 books</a>. His recent book 
+"<a href="https://link.springer.com/book/10.1007%2F978-981-13-3696-6"><i>Financial Mathematics, Derivatives and Structured Products</i></a>"
+has been downloaded 50,000 times on SpringerLink since published in 2019. Chan was in the ISI Science Citation List of 
+<A href="https://clarivate.com/webofsciencegroup/campaigns/highly-cited-researchers-2019-archive/">Top
+Highly-Cited Mathematicians in the world (2001 List)</a>. He won a
+<A href="http://www.ima.org.uk/about_us/awards_and_medals/ima_leslie_fox_prize/previous_winners.html">Leslie
+Fox Prize for Numerical Analysis</a> in 1989 at Cambridge,
+United Kingdom; a
+<A href="http://lsec.cc.ac.cn/fengkangprize/">Feng Kang Prize of
+Scientific Computing</a> in 1997
+in Beijing, China; a
+<A href="https://en.wikipedia.org/wiki/Morningside_Medal">Morningside
+Award</a> in 1998 in Beijing, China; and
+<a href="http://www.cutech.edu.cn/cn/kjjl/jybkjjl/sjxm/2012/02/1326778775591693.htm">
+2011 Higher Education Outstanding Scientific Research Output Awards</a> (First Prize)
+from the Ministry of Education in China. He was elected a
+<a href="https://www.siam.org/Prizes-Recognition/Fellows-Program/All-SIAM-Fellows/Class-of-2013">SIAM
+Fellow</a> in 2013 and an <a href="http://www.ams.org/fellows_by_year.cgi?year=2021">AMS Fellow</a> in 2021. He was the first and only one from an Asian university elected to  
+<a href="http://www.siam.org/about/board.php">SIAM Council</a> since SIAM formed in 1952, and served for two terms from 2015 to 2020.<p>
+
+Chan has served on the editorial boards of
+<a href="./misc/vitae.html#editor">many journals</a>, including:
+<A HREF="http://www.ims.cuhk.edu.hk/ajm/">Asian Journal of Mathematics</A>
+(co-Chief Editor since 1997),
+<a href="http://www.springer.com/computer/mathematics/journal/10444?detailsPage=editorialBoard">Advances in Computational
+Mathematics</a> (since 2010),
+<a href="http://www.springer.com/computer/image+processing/journal/10851?detailsPage=editorialBoard">Journal
+of Mathematical Imaging and Vision</a> (since 2014),
+<a href="http://www.springer.com/mathematics/computational+science+%26+engineering/journal/10915/PSE?detailsPage=editorialBoard&token=prtst0416p">Journal 
+of Scientific Computing </a> (since 2013), SIAM Journal on Imaging Sciences</a> (from 2007 to 2017), and SIAM
+Journal on Scientific Computing (from 2000 to 2008).
+He presented over <a href="misc/vitae.html#talk">190 invited
+conference talks</a> in more than 20 countries, including
+plenary talks at <a href="http://www.siam.org/meetings/la15/">SIAM 
+Conference on Applied Linear Algebra</a> and 
+<a href="https://www.siam.org/conferences/CM/Main/is18">SIAM Conference 
+on Imaging Science</a>. He also reviewed papers
+for more than <a href="./misc/vitae.html#reviewer"
+TITLE="Links to these journals">120 different journals</a>. <p>
+
+His wonderful
+<A Href="misc/vitae.html#tots">group of graduate students</a> includes:
+<A HREF = "http://www.fst.umac.mo/en/staff/fstxqj.html">Xiaoqing Jin</A>,
+the Vice-President of East Asia SIAM and former Head of the Mathematics
+Department at Macau University;
+<A HREF = "https://hkumath.hku.hk/~mng/">Michael Ng</A>,
+former-Head of Department
+of Mathematics at the Hong Kong Baptist University, Director of Research at University of Hong Kong, a SIAM Fellow and a Feng Kang Prize Winner;
+<A Href="http://hkumath.hku.hk/~wkc/">Wai-Ki Ching</a>,
+former Head of Department of Mathematics
+at University of Hong Kong; <a href="https://www.fst.um.edu.mo/people/hsun/">Hai-Wei Sun</a>, 
+Head of Department of Mathematics at University of Macau;
+<A href="http://people.math.gatech.edu/~hmzhou/">Hao-Min Zhou</a>, a Feng Kang Prize Winner,
+<a href="http://math.xmu.edu.cn/school/teacher/bai/">Zheng-Jian Bai</a>,
+the first prize winner of
+<a href="http://lsec.cc.ac.cn/~NASCNAG/winner.htm">Applied
+Numerical Algebra Prize</a> in 2008;
+and <a href="https://xiaohaocai.netlify.app/">Xiaohao
+Cai</a>, the first prize winner of
+<a href="http://cem.sc.mahidol.ac.th/EASIAM/prizes.html">EASIAM
+Student Paper Prize</a> in 2013.
+Michael Ng and Hao-Min Zhou are Fang Kang Prize Winners of 2017 and 2019 respectively.
+<P>
+
+
+
+
+<HR color="#FFFAFA" >
+
+<ul>
+<h3>
+<IMG name="item5" src="gifs/snowman5.gif">
+<A HREF="misc/vitae.html"
+onMouseOver="item5.src='gifs/snowman5.gif'"
+onMouseOut=flyaway(item5)>Curriculum vitae with publication list etc.</A><P>
+</h3>
+
+<h3>
+<IMG name="item3" src="gifs/snowman3.gif">
+<A HREF="misc/conference.html"
+onMouseOver="item3.src='gifs/snowman3.gif'"
+onMouseOut=flyaway(item3)>My travel and conference plan</A><p>
+</h3>
+
+<h3>
+<IMG name="item4" src="gifs/snowman4.gif">
+<A HREF="http://scholar.google.com/citations?user=ICiiEOAAAAAJ&hl=en"
+onMouseOver="item4.src='gifs/snowman4.gif'"
+onMouseOut=flyaway(item4)>My Google Scholar profile</A><p>
+</h3>
+
+<h3>
+<IMG name="item2" src="gifs/snowman2.gif">
+<A HREF="https://www.scopus.com/authid/detail.uri?authorId=7403110910#top"
+onMouseOver="item2.src='gifs/snowman2.gif'"
+onMouseOut=flyaway(item2)>Scopus profile</A><p>
+</h3>
+
+<h3>
+<IMG name="item1" src="gifs/snowman1.gif">
+<A HREF="misc/recruit.html" onMouseOver="item1.src='gifs/snowman1.gif'"
+onMouseOut=flyaway(item2)>Recruiting postdocs and Ph.D. students</A><p>
+</h3>
+
+
+</ul>
+<p>
+
+<p>
+<hr color="#FFFAFA"  >
+<p>
+
+<H3>
+<b><font color="green">Books:</font><br></b>
+</h3>
+<p>
+
+<table>
+<TR>
+<td>
+<i><a href="http://www.oup.com/us/catalog/general/subject/Mathematics/AppliedMathematics/?view=usa&ci=9780199206810#">Milestones 
+in Matrix Computation<br>
+The Selected Works Gene H. Golub 
+<br>
+with Commentaries<br></a></i>
+Edited by R. Chan, C. Greif, and D. O'Leary<br>
+Oxford University Press, Oxford, 2007<br>
+</td>
+<td>
+<img src="./gifs/golubbook.jpg">
+</td>
+<td>
+<i><a href="http://epubs.siam.org/doi/book/10.1137/1.9780898718850">An Introduction 
+to Iterative Toeplitz Solvers</a></i><br>
+Written by R. Chan and X. Q. Jin <br>
+SIAM, Philiphadia, 2007<br> 
+<p>
+<font color=red><a href="http://www.math.cuhk.edu.hk/~rchan/paper/SIAM/toeplitz091106.rar">Download 
+Matlab Programs in the Book</a></font>
+</td>
+<td>
+<img src="./gifs/siambook.jpg">
+</td>
+</tr>
+<tr>
+<td>
+<i><a href="http://www.worldscientific.com/worldscibooks/10.1142/8625#t=aboutBook">Technical
+Analysis and Financial Asset Forecasting<br>
+From Simple Tools to Advanced Techniques<br></a>
+</i>
+Written by R. Chan, S. Lee, and A. Wong<br>
+World Scientific, 2014<br>
+</td>
+<td>
+<img src="./gifs/book_alan_spike.jpg">
+</td>
+<td>
+<i><a href="https://link.springer.com/book/10.1007%2F978-981-13-3696-6">Financial Mathematics, 
+Derivatives<br> and Structured Products<br></a>
+</i>
+Written by
+R. Chan, Y. Guo, S. Lee, and X. Li</a>,
+</a><br>
+Springer, 2019<br>
+</td>
+<td>
+<img src="./gifs/book_yves_spike_xun.jpg">
+</td>
+
+</tr>
+</table>
+
+<p>
+<hr color="#FFFAFA"  >
+<p>
+
+<H3>
+<b>
+<font color="green">Work on Image Processing:</font>
+</b>
+
+<p><font color="red">
+Move your pointer over the images to see the restored images, <br>
+or click on them for more information.</font><P> 
+</h3>
+
+<table>
+<TR>
+<td>
+An image corrupted with<br>
+70% <b><font color="red">salt-and-pepper</font></b><br>
+impulse noise and our<br>
+restoration
+</td>
+<td>
+<A HREF="./paper/impulse"
+onMouseOver="work1.src='./gifs/restored.jpg'"
+onMouseOut="work1.src='./gifs/noise.jpg'">
+<IMG name="work1" src="./gifs/noise.jpg"></a>
+</td>
+<td>
+Part of an image obtained<br>
+from a <b><font color="red">video</font></b>
+(see if you<br>
+can guess the number)<br> 
+and our enhancement<br>
+</td>
+<td>
+<A HREF="./paper/csx"
+onMouseOver="work3.src='./gifs/zoom-in2.jpg'"
+onMouseOut="work3.src='./gifs/zoom-in.jpg'">
+<IMG name="work3" src="./gifs/zoom-in.jpg"></a>
+</td>
+</tr>
+
+<TR>
+<td>
+An image corrupted with<br>
+60% <b><font color="red">random-valued</font></b><br> 
+impulse noise and our<br> restoration
+</td>
+<td>
+<A HREF="./paper/dcx"
+onMouseOver="work2.src='./gifs/pentagon_ROLDresultImg1.jpg'"
+onMouseOut="work2.src='./gifs/pentagon_noiseImg1.jpg'">
+<IMG name="work2" src="./gifs/pentagon_noiseImg1.jpg"></a>
+</td>
+<td>
+<b><font color="red">Segmentation</font></b> of a blurred<br>
+tree image corrupted with <br>
+multiplicative Gamma noise.
+</td>
+<td>
+<A HREF="./paper/tieyong-hongfei_poisson.pdf"
+onMouseOver="work4.src='./gifs/segmented_tree.jpg'"
+onMouseOut="work4.src='./gifs/blur_noise_tree.jpg'">
+<IMG name="work4" src="./gifs/blur_noise_tree.jpg"></a>
+</td>
+</tr>
+</table>
+</body>
+</HTML>
+
